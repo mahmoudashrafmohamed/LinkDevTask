@@ -1,4 +1,4 @@
-package com.mahmoudashraf.data
+package com.mahmoudashraf.data.repositories
 
 import com.mahmoudashraf.data.sources.remote.ArticlesRemoteDataSource
 import com.mahmoudashraf.domain.repositories.NewsRepository
