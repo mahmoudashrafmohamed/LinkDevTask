@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.fragment.findNavController
 import com.mahmoudashraf.core.base.Function
 import com.mahmoudashraf.core.base.getViewModel
 import com.mahmoudashraf.core.views.viewBinding
@@ -24,16 +25,16 @@ class HomeFragment(
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by lazy { viewModelProvider(this) }
-    private val adapter by lazy { ArticlesAdapter() }
+    private val adapter by lazy { ArticlesAdapter(onItemClicked = ::onItemClicked) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        viewModel.screenState.observe(viewLifecycleOwner,::onScreenStateChange)
+        viewModel.screenState.observe(viewLifecycleOwner, ::onScreenStateChange)
     }
 
     private fun onScreenStateChange(state: GetArticlesState) {
-        when(state){
+        when (state) {
             GetArticlesState.Loading -> showLoading()
             is GetArticlesState.Success -> handleSuccessState(state.articles)
             is GetArticlesState.Error -> handleError()
@@ -41,12 +42,17 @@ class HomeFragment(
     }
 
     private fun handleError() {
-        Toast.makeText(context,getString(R.string.something_went_wrong_error_msg),Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            context,
+            getString(R.string.something_went_wrong_error_msg),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun showLoading() {
         binding.progressBar.isVisible = true
     }
+
     private fun hideLoading() {
         binding.progressBar.isVisible = false
     }
@@ -60,4 +66,11 @@ class HomeFragment(
         binding.rvNews.adapter = adapter
     }
 
+    private fun onItemClicked(article: Article) {
+        findNavController().navigate(
+            R.id.detailsFragment,
+            Bundle().apply { putParcelable(ARTICLE_KEY, article) })
+    }
+
 }
+const val ARTICLE_KEY = "ARTICLE_KEY"
