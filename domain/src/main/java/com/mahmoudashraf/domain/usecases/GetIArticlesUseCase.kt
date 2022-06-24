@@ -8,6 +8,6 @@ class GetArticlesUseCase(private val newsRepository: NewsRepository) {
 }
 
 object ArticlesSource {
-    val nextWeb = "the-next web"
+    val nextWeb = "the-next-web"
     val associatedPress="associated-press"
 }

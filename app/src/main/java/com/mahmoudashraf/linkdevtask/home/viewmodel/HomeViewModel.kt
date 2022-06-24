@@ -15,6 +15,10 @@ class HomeViewModel(
 ) : BaseViewModel() {
     internal val screenState by lazy { MutableLiveData<GetArticlesState>() }
 
+    init {
+        loadArticles()
+    }
+
     private fun loadArticles() {
         screenState.postValue(GetArticlesState.Loading)
         getArticlesUseCase(source = ArticlesSource.nextWeb)

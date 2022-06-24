@@ -10,4 +10,5 @@
     <string name="welcome">Welcome</string>
     <string name="tony_roshdy">Tony Roshdy</string>
     <string name="search">search</string>
+    <string name="something_went_wrong_error_msg">Something went wrong!</string>
 </resources>
